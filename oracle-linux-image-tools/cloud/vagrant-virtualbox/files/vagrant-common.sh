@@ -44,6 +44,11 @@ vagrant::config()
 		EOF
   fi
 
+  # set crypto-policies to legacy, because vagrant's insecure key is of type ssh-rsa
+  if [[ "${ORACLE_RELEASE}" = "9" ]]; then
+    /bin/update-crypto-policies --set LEGACY
+  fi
+
   cat >>/etc/sysconfig/sshd <<EOF
 
 # Decrease connection time by preventing reverse DNS lookups
